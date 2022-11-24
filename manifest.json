@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "LiveView DevTools",
+  "version": "0.1",
+  "default_locale": "en",
+  "description": "View the state of your LiveView and its components from the DevTools pane!",
+  "author": "John Curran , jcurran996@gmail.com",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "devtools_page": "devtools.html"
+}

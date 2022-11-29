@@ -28,18 +28,20 @@ function hookWebSocket() {
     var socket = new window.RealWebSocket(...arguments);
 
     socket.addEventListener('message', (e) => {
+      // console.log(e);
       channelReply = JSON.parse(e.data);
 
-      if (!channelReply.at(TOPIC) == 'lvdbg') {
+      if (channelReply.at(TOPIC) != 'lvdbg') {
         return;
       }
+
       console.log('channel reply', channelReply);
 
       const msg = channelReply.at(MSG);
-      console.log('Received Lv Dbg msg', msg);
+      console.log('Lv Dbg msg', msg);
 
       const replyData = channelReply.at(REPLY);
-      console.log('Received Lv Dbg data', replyData);
+      console.log('Lv Dbg data', replyData);
     });
 
     return socket;

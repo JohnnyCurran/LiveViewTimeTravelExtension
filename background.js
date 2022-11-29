@@ -12,6 +12,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     console.log('Received message from devtools page', msg);
   });
 });
+
 // Function to send a message to all devtools.html views:
 function notifyDevtools(msg) {
   ports.forEach(function(port) {

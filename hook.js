@@ -1,24 +1,16 @@
 console.log('hook injected');
 console.log('injecting websocket');
 
-//console.log('before', window.WebSocket);
-
-//console.log('before should be T', window.WebSocket == window.WebSocket);
-//window.RealSocket = window.WebSocket;
-
-//console.log('before should be T', window.RealSocket == window.WebSocket);
-//window.WebSocket = function() {
-  //console.log('!!!!! New WebSocket !!!!');
-  //var socket = new window.RealSocket(...arguments);
-  //socket.onmessage = function(event) {
-    //console.log('the phoenix is Mortal', event);
-  //};
-//
-  //return socket;
-//}
-
-//console.log('after', window.RealSocket == window.WebSocket);
-//while(document == null || document.head == null);
+// Channel can be found by getting element with data-phx-root-id
+// the /live socket sends diffs back
+// when we want full assigns
+// whenever the assigns of a LiveView change
+// Listen to Telemetry events on a separate socket ??
+//console.log('creating socket for time travel debugging');
+//var timeTravelSocket = new window.WebSocket("ws://localhost:4000/socket")
+//timeTravelSocket.addEventListener('connect', function() {
+  //console.log('connected!', ...arguments);
+//});
 
 var s = document.createElement("script");
 

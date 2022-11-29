@@ -19,3 +19,9 @@ function notifyDevtools(msg) {
     port.postMessage(msg);
   });
 }
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+  console.log('Got event');
+  console.log(changes);
+  console.log(areaName);
+});

@@ -1,19 +1,11 @@
-console.log('hook injected');
-console.log('injecting websocket');
+console.log('Injecting Websocket');
 
 // Channel can be found by getting element with data-phx-root-id
-// the /live socket sends diffs back
 // when we want full assigns
 // whenever the assigns of a LiveView change
 // Listen to Telemetry events on a separate socket ??
-//console.log('creating socket for time travel debugging');
-//var timeTravelSocket = new window.WebSocket("ws://localhost:4000/socket")
-//timeTravelSocket.addEventListener('connect', function() {
-  //console.log('connected!', ...arguments);
-//});
 
 var s = document.createElement("script");
-
 
 function hookWebSocket() {
   const IM_NOT_SURE = 0;
@@ -28,7 +20,6 @@ function hookWebSocket() {
     var socket = new window.RealWebSocket(...arguments);
 
     socket.addEventListener('message', (e) => {
-      // console.log(e);
       channelReply = JSON.parse(e.data);
 
       if (channelReply.at(TOPIC) != 'lvdbg') {
@@ -42,6 +33,11 @@ function hookWebSocket() {
 
       const replyData = channelReply.at(REPLY);
       console.log('Lv Dbg data', replyData);
+
+      // localStorage.setItem('payload', replyData.payload);
+
+      const event = new CustomEvent('MyEvent', {detail: replyData.payload});
+      window.dispatchEvent(event);
     });
 
     return socket;
@@ -58,3 +54,11 @@ timer = setTimeout(function() {
     clearTimeout(timer);
   }
 }, 10);
+
+//window.addEventListener('DOMContentLoaded', function() {
+  //console.log('content script received dom content loaded');
+//});
+
+window.addEventListener('MyEvent', function(e) {
+  console.log('My Event!', e);
+});

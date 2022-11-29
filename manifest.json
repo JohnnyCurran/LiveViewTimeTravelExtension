@@ -4,6 +4,9 @@
   "version": "0.1",
   "description": "View the state of your LiveView and its components from the DevTools pane!",
   "author": "John Curran , jcurran996@gmail.com",
+  "permissions": [
+    "storage"
+  ],
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",

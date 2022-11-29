@@ -55,10 +55,7 @@ timer = setTimeout(function() {
   }
 }, 10);
 
-//window.addEventListener('DOMContentLoaded', function() {
-  //console.log('content script received dom content loaded');
-//});
-
 window.addEventListener('MyEvent', function(e) {
   console.log('My Event!', e);
+  chrome.storage.local.set(e, function() {});
 });

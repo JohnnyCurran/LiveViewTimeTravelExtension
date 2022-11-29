@@ -14,14 +14,32 @@ console.log('injecting websocket');
 
 var s = document.createElement("script");
 
+
 function hookWebSocket() {
+  const IM_NOT_SURE = 0;
+  const IM_NOT_SURE_EITHER = 1;
+  const TOPIC = 2;
+  const MSG = 3;
+  const REPLY = 4;
+
   window.RealWebSocket = window.WebSocket;
 
   window.WebSocket = function() {
     var socket = new window.RealWebSocket(...arguments);
 
     socket.addEventListener('message', (e) => {
-      console.log('The Phoenix is Mortal', e);
+      channelReply = JSON.parse(e.data);
+
+      if (!channelReply.at(TOPIC) == 'lvdbg') {
+        return;
+      }
+      console.log('channel reply', channelReply);
+
+      const msg = channelReply.at(MSG);
+      console.log('Received Lv Dbg msg', msg);
+
+      const replyData = channelReply.at(REPLY);
+      console.log('Received Lv Dbg data', replyData);
     });
 
     return socket;

@@ -57,5 +57,5 @@ timer = setTimeout(function() {
 
 window.addEventListener('MyEvent', function(e) {
   console.log('My Event!', e);
-  chrome.storage.local.set(e, function() {});
+  chrome.storage.local.set({payload: e.detail}, function() {});
 });

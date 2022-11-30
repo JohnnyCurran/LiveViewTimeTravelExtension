@@ -34,10 +34,7 @@ function hookWebSocket() {
       const replyData = channelReply.at(REPLY);
       console.log('Lv Dbg data', replyData);
 
-      // localStorage.setItem('payload', replyData.payload);
-
-      const event = new CustomEvent('MyEvent', {detail: replyData.payload});
-      window.dispatchEvent(event);
+      window.dispatchEvent(new CustomEvent('MyEvent', {detail: replyData.payload}));
     });
 
     return socket;
@@ -57,5 +54,5 @@ timer = setTimeout(function() {
 
 window.addEventListener('MyEvent', function(e) {
   console.log('My Event!', e);
-  chrome.storage.local.set({payload: e.detail}, function() {});
+  chrome.storage.local.set({payload: e.detail});
 });

@@ -1,7 +1,9 @@
 var ports = [];
+devtoolsPort = undefined;
 chrome.runtime.onConnect.addListener(function(port) {
   if (port.name !== 'devtools') return;
   ports.push(port);
+  devtoolsPort = port;
   // Remove port when destroyed (eg when devtools instance is closed)
   port.onDisconnect.addListener(function() {
     var i = ports.indexOf(port);
@@ -9,7 +11,7 @@ chrome.runtime.onConnect.addListener(function(port) {
   });
   port.onMessage.addListener(function(msg) {
     // Received message from devtools. Do something:
-    console.log('Received message from devtools page', msg);
+    console.log('Received message from devtools port', msg);
   });
 });
 
@@ -20,8 +22,17 @@ function notifyDevtools(msg) {
   });
 }
 
+messages = []
+
 chrome.storage.onChanged.addListener(function(changes, areaName) {
-  console.log('Got event');
+  console.log('Got event', changes);
   console.log(changes);
-  console.log(areaName);
+  notifyDevtools(changes);
+  // console.log('devtoolsPort', devtoolsPort)
+  // if (!devtoolsPort) {
+    // messages.push(changes);
+    // return;
+  // }
+  // messages.push(changes);
+  // messages.forEach(msg => devtoolsPort.postMessage(changes));
 });

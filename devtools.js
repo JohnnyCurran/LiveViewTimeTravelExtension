@@ -1,4 +1,4 @@
-chrome.devtools.panels.create('LiveView Devtools', 'images/icon-16.png', '/devtools.html', function(extensionPanel) {
+chrome.devtools.panels.create('LiveView Devtools', 'images/icon-16.png', 'panel.html', function(extensionPanel) {
   var _window; // Going to hold the reference to panel.html's `window`
 
   var data = [];
@@ -7,8 +7,7 @@ chrome.devtools.panels.create('LiveView Devtools', 'images/icon-16.png', '/devto
     // Write information to the panel, if exists.
     // If we don't have a panel reference (yet), queue the data.
     if (_window) {
-      console.log('We have received', msg);
-      // _window.do_something(msg);
+      _window.do_something(msg);
     } else {
       data.push(msg);
     }
@@ -22,16 +21,12 @@ chrome.devtools.panels.create('LiveView Devtools', 'images/icon-16.png', '/devto
 
     // Release queued data
     var msg;
-    while (msg = data.shift()) 
-      console.log('Window has received msg: ', msg);
-      // _window.do_something(msg);
+    while (msg = data.shift()) {
+      _window.do_something(msg);
+    }
     // Just to show that it's easy to talk to pass a message back:
     _window.respond = function(msg) {
       port.postMessage(msg);
-    };
+    }
   });
-});
-
-chrome.runtime.onConnect.addListener(function(port) {
-  console.log('got port', port.name);
 });

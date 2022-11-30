@@ -2,7 +2,7 @@
 window.addEventListener('SaveAssigns', function(e) {
   console.log('My Event Detail!', e.detail);
   if (!e.detail.time) { return; }
-  chrome.storage.local.set({[e.detail.time]: e.detail.payload});
+  chrome.storage.local.set({[e.detail.time]: {payload: e.detail.payload, name: e.detail.name}});
 });
 
 chrome.runtime.onMessage.addListener(

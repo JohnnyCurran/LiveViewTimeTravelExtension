@@ -34,7 +34,7 @@ function hookWebSocket() {
       const replyData = channelReply.at(REPLY);
       console.log('Lv Dbg data', replyData);
 
-      window.dispatchEvent(new CustomEvent('MyEvent', {detail: replyData.payload}));
+      window.dispatchEvent(new CustomEvent('SaveAssigns', {detail: replyData}));
     });
 
     return socket;
@@ -52,9 +52,9 @@ timer = setTimeout(function() {
   }
 }, 10);
 
-window.addEventListener('MyEvent', function(e) {
-  console.log('My Event!', e);
-  chrome.storage.local.set({payload: e.detail});
+window.addEventListener('SaveAssigns', function(e) {
+  console.log('My Event Detail!', e.detail);
+  chrome.storage.local.set({[e.detail.time]: e.detail.payload});
 });
 
 chrome.runtime.onMessage.addListener(
@@ -63,7 +63,7 @@ chrome.runtime.onMessage.addListener(
     console.log(sender.tab ?
       "from a content script:" + sender.tab.url :
       "from the extension");
-    if (request.greeting === "hello")
-      sendResponse({farewell: "goodbye"});
+    // if (request.greeting === "hello")
+      // sendResponse({farewell: "goodbye"});
   }
 );

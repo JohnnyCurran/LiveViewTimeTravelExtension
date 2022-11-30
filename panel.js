@@ -41,7 +41,7 @@ function updateAssignsDom(timeKey) {
 }
 
 // Replace current assigns using slider
-slider.onchange = function(e) {
+slider.oninput = function(e) {
   console.log('change', e);
   timeKeyIndex = e.target.value;
 

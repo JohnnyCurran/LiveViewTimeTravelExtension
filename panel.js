@@ -56,6 +56,7 @@ document.getElementById('clear').onclick = function() {
   chrome.storage.local.clear();
   timeKeys = [];
   updateSlider(0, 0);
+  updateAssignsDom({eventName: "", assigns: "{}"});
 }
 
 document.getElementById('restore').onclick = function() {

@@ -1,21 +1,22 @@
 // {time: time, assigns: assigns}
+// TODO: Rename timeKeys. Terrible name. Not indicative of what it's doing
+// It's more like socketStates
 timeKeys = []
 
 function do_something(msg) {
-  console.log('panel got msg', msg);
+  //console.log('panel got msg', msg);
   for (time in msg) {
-    console.log('msg[time]', msg[time]);
+    if (!msg[time].newValue) {
+      console.log('Failed to get msg[time].newValue on msg', msg);
+      return;
+    }
     currentAssigns = msg[time].newValue.payload;
     eventName = msg[time].newValue.name;
     timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName});
-    console.log('new time keys', timeKeys);
-    // Switch to current assigns as they come in
+    // console.log('new time keys', timeKeys);
     updateAssignsDom(timeKeys[timeKeys.length - 1])
-    //document.getElementById('assigns').innerText = currentAssigns;
-    //document.getElementById('event-name').innerText = eventName;
   }
-  console.log('time keys', timeKeys);
-  updateSlider()
+  updateSlider(timeKeys.length - 1, timeKeys.length - 1)
 }
 
 function getTimeKey(index) {
@@ -24,8 +25,11 @@ function getTimeKey(index) {
 }
 
 const slider = document.getElementById('restore-range');
-function updateSlider() {
-  slider.setAttribute('max', timeKeys.length - 1);
+function updateSlider(max, value) {
+  //console.log('updating slider value max', max);
+  //console.log('updating slider value value', value);
+  slider.setAttribute('max', max);
+  slider.setAttribute('value', value);
 }
 
 function updateAssignsDom(timeKey) {
@@ -40,18 +44,25 @@ slider.onchange = function(e) {
   console.log('change', e);
   timeKeyIndex = e.target.value;
 
+  //console.log('target value', e.target.value);
+  //console.log('dom value', slider.value);
+
   updateAssignsDom(getTimeKey(timeKeyIndex));
+  updateSlider(timeKeys.length - 1, e.target.value);
 }
 
 document.getElementById('clear').onclick = function() {
   chrome.storage.local.clear();
+  timeKeys = [];
+  updateSlider(0, 0);
 }
 
 document.getElementById('restore').onclick = function() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    timeKey = timeKeys[slider.value].time;
-    console.log('timekey', timeKey);
-    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey}, function(response) {
+    timeKey = getTimeKey(slider.value)
+    console.log('timekey from restore', timeKey);
+    updateAssignsDom(timeKey);
+    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey.time}, function(response) {
       console.log(response);
     });
   });

@@ -1,9 +1,9 @@
 var ports = [];
-devtoolsPort = undefined;
+//devtoolsPort = undefined;
 chrome.runtime.onConnect.addListener(function(port) {
-  if (port.name !== 'devtools') return;
+  if (port.name !== 'devtools' || 'panelHook') return;
   ports.push(port);
-  devtoolsPort = port;
+  //devtoolsPort = port;
   // Remove port when destroyed (eg when devtools instance is closed)
   port.onDisconnect.addListener(function() {
     var i = ports.indexOf(port);

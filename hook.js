@@ -56,3 +56,14 @@ window.addEventListener('MyEvent', function(e) {
   console.log('My Event!', e);
   chrome.storage.local.set({payload: e.detail});
 });
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    window.dispatchEvent(new CustomEvent('RestoreAssigns', {detail: 'hello there'}));
+    console.log(sender.tab ?
+      "from a content script:" + sender.tab.url :
+      "from the extension");
+    if (request.greeting === "hello")
+      sendResponse({farewell: "goodbye"});
+  }
+);

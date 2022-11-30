@@ -48,8 +48,20 @@ slider.oninput = function(e) {
   //console.log('target value', e.target.value);
   //console.log('dom value', slider.value);
 
+  restoreState();
   updateAssignsDom(getTimeKey(timeKeyIndex));
   updateSlider(timeKeys.length - 1, e.target.value);
+}
+
+function restoreState() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    timeKey = getTimeKey(slider.value)
+    console.log('timekey from restore', timeKey);
+    updateAssignsDom(timeKey);
+    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey.time}, function(response) {
+      console.log(response);
+    });
+  });
 }
 
 document.getElementById('clear').onclick = function() {
@@ -60,12 +72,5 @@ document.getElementById('clear').onclick = function() {
 }
 
 document.getElementById('restore').onclick = function() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    timeKey = getTimeKey(slider.value)
-    console.log('timekey from restore', timeKey);
-    updateAssignsDom(timeKey);
-    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey.time}, function(response) {
-      console.log(response);
-    });
-  });
+  restoreState();
 }

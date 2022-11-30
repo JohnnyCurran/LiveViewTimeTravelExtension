@@ -35,7 +35,8 @@ function updateSlider(max, value) {
 function updateAssignsDom(timeKey) {
   assigns = timeKey.assigns;
   eventName = timeKey.eventName;
-  document.getElementById('assigns').innerText = currentAssigns;
+  prettyAssigns = JSON.stringify(JSON.parse(assigns), null, 2);
+  document.getElementById('assigns').innerText = prettyAssigns;
   document.getElementById('event-name').innerText = eventName;
 }
 

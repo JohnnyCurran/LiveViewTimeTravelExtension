@@ -7,6 +7,8 @@ function do_something(msg) {
     // console.log(msg[time]);
     currentAssigns = msg[time].newValue;
     timeKeys.push({time: time, assigns: currentAssigns});
+    console.log('new time keys', timeKeys);
+    // Switch to current assigns as they come in
     document.getElementById('assigns').innerText = currentAssigns;
   }
   console.log('time keys', timeKeys);
@@ -17,6 +19,18 @@ const slider = document.getElementById('restore-range');
 function updateSlider() {
   slider.setAttribute('max', timeKeys.length);
 }
+
+//function updateAssignsDom(timeKeyIndex) {
+  //assigns = timeKeys[timeKeyIndex].assigns;
+  //document.getElementById('assigns').innerText = currentAssigns;
+//}
+
+// Replace current assigns using slider
+//slider.onchange = function(e) {
+  //console.log('change', e);
+  //timeKeyIndex = e.target.value;
+  //updateAssignsDom(timeKeyIndex);
+//}
 
 document.getElementById('clear').onclick = function() {
   chrome.storage.local.clear();

@@ -59,11 +59,12 @@ window.addEventListener('SaveAssigns', function(e) {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+    console.log('Event request', request);
     window.dispatchEvent(new CustomEvent('RestoreAssigns', {detail: 'hello there'}));
     console.log(sender.tab ?
       "from a content script:" + sender.tab.url :
       "from the extension");
-    // if (request.greeting === "hello")
-      // sendResponse({farewell: "goodbye"});
+
+    sendResponse('ok');
   }
 );

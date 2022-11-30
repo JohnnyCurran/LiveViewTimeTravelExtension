@@ -12,6 +12,9 @@ chrome.runtime.onConnect.addListener(function(port) {
   port.onMessage.addListener(function(msg) {
     // Received message from devtools. Do something:
     console.log('Received message from devtools port', msg);
+    if (msg == 'RESTORE') {
+      console.log('background received restore event');
+    }
   });
 });
 

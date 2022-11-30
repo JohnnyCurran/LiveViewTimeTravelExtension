@@ -6,6 +6,10 @@ function do_something(msg) {
   document.getElementById('assigns').innerText = msg;
 }
 
+document.getElementById('restore').onclick = function() {
+  respond('RESTORE');
+}
+
 document.documentElement.onclick = function() {
   // No need to check for the existence of `respond`, because
   // the panel can only be clicked when it's visible...

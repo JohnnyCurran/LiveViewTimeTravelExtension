@@ -53,6 +53,7 @@ slider.oninput = function(e) {
   updateSlider(timeKeys.length - 1, e.target.value);
 }
 
+// TODO: Add a debounce 100ms or something?
 function restoreState() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     timeKey = getTimeKey(slider.value)

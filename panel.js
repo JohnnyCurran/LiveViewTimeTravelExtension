@@ -4,27 +4,33 @@ timeKeys = []
 function do_something(msg) {
   console.log('panel got msg', msg);
   for (time in msg) {
-    // console.log(msg[time]);
+    console.log('msg[time]', msg[time]);
     currentAssigns = msg[time].newValue.payload;
     eventName = msg[time].newValue.name;
     timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName});
     console.log('new time keys', timeKeys);
     // Switch to current assigns as they come in
-    document.getElementById('assigns').innerText = currentAssigns;
-    document.getElementById('event-name').innerText = eventName;
+    updateAssignsDom(timeKeys[timeKeys.length - 1])
+    //document.getElementById('assigns').innerText = currentAssigns;
+    //document.getElementById('event-name').innerText = eventName;
   }
   console.log('time keys', timeKeys);
   updateSlider()
 }
 
-const slider = document.getElementById('restore-range');
-function updateSlider() {
-  slider.setAttribute('max', timeKeys.length);
+function getTimeKey(index) {
+  if (!timeKeys[index]) return {assigns: "", name: "", time: 0};
+  return timeKeys[index];
 }
 
-function updateAssignsDom(timeKeyIndex) {
-  assigns = timeKeys[timeKeyIndex].assigns;
-  eventName = timeKeys[timeKeyIndex].eventName;
+const slider = document.getElementById('restore-range');
+function updateSlider() {
+  slider.setAttribute('max', timeKeys.length - 1);
+}
+
+function updateAssignsDom(timeKey) {
+  assigns = timeKey.assigns;
+  eventName = timeKey.eventName;
   document.getElementById('assigns').innerText = currentAssigns;
   document.getElementById('event-name').innerText = eventName;
 }
@@ -33,7 +39,8 @@ function updateAssignsDom(timeKeyIndex) {
 slider.onchange = function(e) {
   console.log('change', e);
   timeKeyIndex = e.target.value;
-  updateAssignsDom(timeKeyIndex);
+
+  updateAssignsDom(getTimeKey(timeKeyIndex));
 }
 
 document.getElementById('clear').onclick = function() {

@@ -1,5 +1,7 @@
 # LiveView Time Travel Debugger Browser Extension
 
+The extension companion to [TimeTravel](https://github.com/JohnnyCurran/TimeTravel) - Record and replay your LiveView's state
+
 ## Installation
 
 **This is a V2 manifest Extension meaning it cannot be distributed through the Chrome Web Store**

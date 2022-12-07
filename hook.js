@@ -15,9 +15,6 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log('Event request', request);
     window.dispatchEvent(new CustomEvent('RestoreAssigns', {detail: request}));
-    console.log(sender.tab ?
-      "from a content script:" + sender.tab.url :
-      "from the extension");
 
     sendResponse('ok');
   }

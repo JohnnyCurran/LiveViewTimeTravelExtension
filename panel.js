@@ -55,8 +55,19 @@ slider.oninput = function(e) {
   updateSlider(timeKeys.length - 1, e.target.value);
 }
 
-// TODO: Add a debounce 100ms or something?
-function restoreState() {
+document.getElementById('clear').onclick = function() {
+  chrome.storage.local.clear();
+  timeKeys = [];
+  updateSlider(0, 0);
+  updateAssignsDom({eventName: "", assigns: "{}"});
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {msg: 'ClearAssigns'}, function(response) {
+      console.log(response);
+    });
+  });
+}
+
+document.getElementById('restore').onclick = function() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     timeKey = getTimeKey(slider.value)
     console.log('timekey from restore', timeKey);
@@ -67,17 +78,6 @@ function restoreState() {
       console.log(response);
     });
   });
-}
-
-document.getElementById('clear').onclick = function() {
-  chrome.storage.local.clear();
-  timeKeys = [];
-  updateSlider(0, 0);
-  updateAssignsDom({eventName: "", assigns: "{}"});
-}
-
-document.getElementById('restore').onclick = function() {
-  restoreState();
 }
 
 chrome.runtime.onMessage.addListener(

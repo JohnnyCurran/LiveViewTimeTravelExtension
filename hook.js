@@ -15,12 +15,25 @@ window.addEventListener('SaveAssigns', function(e) {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.msg != 'RestoreAssigns') {
-      return;
+    switch(request.msg) {
+      case 'RestoreAssigns':
+        return restoreAssigns(request, sendResponse);
+      case 'ClearAssigns':
+        return clearAssigns(request, sendResponse);
+      default:
+        return;
     }
-    console.log('Restore event request', request);
-    window.dispatchEvent(new CustomEvent('RestoreAssigns', {detail: request}));
-
-    sendResponse('ok');
   }
 );
+
+function restoreAssigns(request, sendResponse) {
+  console.log('Restore event request', request);
+  window.dispatchEvent(new CustomEvent('RestoreAssigns', {detail: request}));
+  sendResponse('ok');
+}
+
+function clearAssigns(request, sendResponse) {
+  console.log('Clear event request', request);
+  window.dispatchEvent(new CustomEvent('ClearAssigns'));
+  sendResponse('ok');
+}

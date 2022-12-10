@@ -63,7 +63,7 @@ function restoreState() {
     updateAssignsDom(timeKey);
     // jumperKey: socketId key in TimeTravel.Jumper that corresponds with the state
     // we want to retrieve
-    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey.time, jumperKey: timeKey.socketId}, function(response) {
+    chrome.tabs.sendMessage(tabs[0].id, {msg: 'RestoreAssigns', time: timeKey.time, jumperKey: timeKey.socketId}, function(response) {
       console.log(response);
     });
   });

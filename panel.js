@@ -10,9 +10,11 @@ function do_something(msg) {
       console.log('Failed to get msg[time].newValue on msg', msg);
       return;
     }
+    // console.log('msg[time]', msg[time]);
     currentAssigns = msg[time].newValue.payload;
-    eventName = msg[time].newValue.name;
-    timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName});
+    eventName = msg[time].newValue.eventName;
+    socketId = msg[time].newValue.socketId
+    timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName, socketId: socketId});
     // console.log('new time keys', timeKeys);
     updateAssignsDom(timeKeys[timeKeys.length - 1])
   }
@@ -42,7 +44,7 @@ function updateAssignsDom(timeKey) {
 
 // Replace current assigns using slider
 slider.oninput = function(e) {
-  console.log('change', e);
+  // console.log('change', e);
   timeKeyIndex = e.target.value;
 
   //console.log('target value', e.target.value);
@@ -59,7 +61,9 @@ function restoreState() {
     timeKey = getTimeKey(slider.value)
     console.log('timekey from restore', timeKey);
     updateAssignsDom(timeKey);
-    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey.time}, function(response) {
+    // jumperKey: socketId key in TimeTravel.Jumper that corresponds with the state
+    // we want to retrieve
+    chrome.tabs.sendMessage(tabs[0].id, {time: timeKey.time, jumperKey: timeKey.socketId}, function(response) {
       console.log(response);
     });
   });
@@ -75,3 +79,11 @@ document.getElementById('clear').onclick = function() {
 document.getElementById('restore').onclick = function() {
   restoreState();
 }
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.storeAssigns) {
+      console.log('storing assigns message received', request);
+    }
+  }
+);

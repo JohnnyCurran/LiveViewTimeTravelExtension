@@ -67,7 +67,7 @@ document.getElementById('clear').onclick = function() {
   });
 }
 
-document.getElementById('restore').onclick = function() {
+function restoreState() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     timeKey = getTimeKey(slider.value)
     console.log('timekey from restore', timeKey);
@@ -78,6 +78,10 @@ document.getElementById('restore').onclick = function() {
       console.log(response);
     });
   });
+}
+
+document.getElementById('restore').onclick = function() {
+  restoreState();
 }
 
 chrome.runtime.onMessage.addListener(

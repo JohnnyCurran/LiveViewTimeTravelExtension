@@ -6,7 +6,7 @@ See [TimeTravelDemo](https://github.com/JohnnyCurran/TimeTravelDemo) for a worki
 
 ## Installation through the Chrome Web Store
 
-The time travel extension is currently pending approval. Please see [install-unpacked-extension](#install-unpacked-extension)
+The time travel extension is currently pending approval. Please see [install unpacked extension](#install-unpacked-extension)
 
 ## Install unpacked extension
 

@@ -10,6 +10,6 @@ The time travel extension is currently pending approval. Please see [install-unp
 
 ## Install unpacked extension
 
-[Download the latest tag](https://github.com/JohnnyCurran/LiveViewTimeTravelExtension/tags), unzip, and then follow the instructions on [how to load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
+[Download the latest zip bundle](https://github.com/JohnnyCurran/LiveViewTimeTravelExtension/tags), unzip, and then follow the instructions on [how to load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
 
 Once installed, you should see the "LiveView Devtools" tab when you open Developer Tools

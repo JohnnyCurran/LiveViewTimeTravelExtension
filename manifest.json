@@ -1,7 +1,7 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "LiveView DevTools",
-  "version": "0.1",
+  "version": "0.0.0.1",
   "description": "View the state of your LiveView and its components from the DevTools pane!",
   "author": "John Curran , jcurran996@gmail.com",
   "permissions": [
@@ -13,7 +13,7 @@
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
-  "background": { "scripts": ["./background.js"] },
+  "background": { "service_worker": "background.js" },
   "devtools_page": "./devtools.html",
   "content_scripts": [
     {

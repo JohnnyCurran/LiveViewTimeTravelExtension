@@ -2,12 +2,14 @@
 
 The extension companion to [TimeTravel](https://github.com/JohnnyCurran/TimeTravel) - Record and replay your LiveView's state
 
-## Installation
+See [TimeTravelDemo](https://github.com/JohnnyCurran/TimeTravelDemo) for a working LiveView demo
 
-**This is a V2 manifest Extension meaning it cannot be distributed through the Chrome Web Store**
+## Installation through the Chrome Web Store
 
-If you would like to help update it to use manifest V3, Pull Requests are welcome :)
+The time travel extension is currently pending approval. Please see [install unpacked extension](#install-unpacked-extension)
 
-To install, follow the instructions on [how to load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
+## Install unpacked extension
+
+[Download the latest zip bundle](https://github.com/JohnnyCurran/LiveViewTimeTravelExtension/tags), unzip, and then follow the instructions on [how to load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
 
 Once installed, you should see the "LiveView Devtools" tab when you open Developer Tools

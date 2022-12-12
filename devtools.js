@@ -17,8 +17,6 @@ chrome.devtools.panels.create('LiveView Devtools', 'images/icon-16.png', 'panel.
     extensionPanel.onShown.removeListener(tmp); // Run once only
     _window = panelWindow;
 
-    console.log('window', panelWindow);
-
     // Release queued data
     var msg;
     while (msg = data.shift()) {

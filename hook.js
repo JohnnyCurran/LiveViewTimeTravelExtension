@@ -1,6 +1,6 @@
 // Listen to event from app.js
 window.addEventListener('SaveAssigns', function(e) {
-  console.log('My Event Detail!', e.detail);
+  // console.log('My Event Detail!', e.detail);
   if (!e.detail.time) { return; }
   // Retrieve time key for from storage with:
   // chrome.storage.local.get(socketId)[time]
@@ -21,13 +21,11 @@ chrome.runtime.onMessage.addListener(
 );
 
 function restoreAssigns(request, sendResponse) {
-  console.log('Restore event request', request);
   window.dispatchEvent(new CustomEvent('RestoreAssigns', {detail: request}));
   sendResponse('ok');
 }
 
 function clearAssigns(request, sendResponse) {
-  console.log('Clear event request', request);
   window.dispatchEvent(new CustomEvent('ClearAssigns'));
   sendResponse('ok');
 }

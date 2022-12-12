@@ -4,7 +4,7 @@
 timeKeys = []
 
 function do_something(msg) {
-  console.log('panel got msg', msg);
+  // console.log('panel got msg', msg);
   for (time in msg) {
     if (!msg[time].newValue) {
       console.log('Failed to get msg[time].newValue on msg', msg);
@@ -32,12 +32,12 @@ function updateSlider(max, value) {
 }
 
 function updateAssignsDom(timeKey) {
-  assigns = timeKey.assigns;
-  eventName = timeKey.eventName;
-  console.log(timeKey.eventArgs);
-  prettyAssigns = JSON.stringify(JSON.parse(assigns), null, 2);
+  const {assigns, eventName, eventArgs} = timeKey;
+  let prettyArgs = JSON.stringify(JSON.parse(eventArgs), null, 2);
+  let prettyAssigns = JSON.stringify(JSON.parse(assigns), null, 2);
   document.getElementById('assigns').innerText = prettyAssigns;
   document.getElementById('event-name').innerText = eventName;
+  document.getElementById('event-args').innerText = prettyArgs;
 }
 
 // Replace current assigns using slider

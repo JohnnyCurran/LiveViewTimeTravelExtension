@@ -22,6 +22,5 @@ function notifyDevtools(msg) {
 }
 
 chrome.storage.onChanged.addListener(function(changes, areaName) {
-  console.log('Got event', changes);
   notifyDevtools(changes);
 });

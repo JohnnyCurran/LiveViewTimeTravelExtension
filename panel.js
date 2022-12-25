@@ -4,18 +4,17 @@
 timeKeys = []
 
 function do_something(msg) {
-  //console.log('panel got msg', msg);
+  // console.log('panel got msg', msg);
   for (time in msg) {
     if (!msg[time].newValue) {
       console.log('Failed to get msg[time].newValue on msg', msg);
       return;
     }
-    // console.log('msg[time]', msg[time]);
     currentAssigns = msg[time].newValue.payload;
     eventName = msg[time].newValue.eventName;
-    socketId = msg[time].newValue.socketId
-    timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName, socketId: socketId});
-    // console.log('new time keys', timeKeys);
+    socketId = msg[time].newValue.socketId;
+    eventArgs = msg[time].newValue.eventArgs;
+    timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName, socketId: socketId, eventArgs: eventArgs});
     updateAssignsDom(timeKeys[timeKeys.length - 1])
   }
   updateSlider(timeKeys.length - 1, timeKeys.length - 1)
@@ -28,27 +27,25 @@ function getTimeKey(index) {
 
 const slider = document.getElementById('restore-range');
 function updateSlider(max, value) {
-  //console.log('updating slider value max', max);
-  //console.log('updating slider value value', value);
   slider.setAttribute('max', max);
   slider.setAttribute('value', value);
 }
 
 function updateAssignsDom(timeKey) {
-  assigns = timeKey.assigns;
-  eventName = timeKey.eventName;
-  prettyAssigns = JSON.stringify(JSON.parse(assigns), null, 2);
+  const {assigns, eventName, eventArgs} = timeKey;
+  if (!eventArgs || !assigns) {
+    return;
+  }
+  let prettyArgs = JSON.stringify(JSON.parse(eventArgs), null, 2);
+  let prettyAssigns = JSON.stringify(JSON.parse(assigns), null, 2);
   document.getElementById('assigns').innerText = prettyAssigns;
   document.getElementById('event-name').innerText = eventName;
+  document.getElementById('event-args').innerText = prettyArgs;
 }
 
 // Replace current assigns using slider
 slider.oninput = function(e) {
-  // console.log('change', e);
   timeKeyIndex = e.target.value;
-
-  //console.log('target value', e.target.value);
-  //console.log('dom value', slider.value);
 
   restoreState();
   updateAssignsDom(getTimeKey(timeKeyIndex));
@@ -79,15 +76,3 @@ function restoreState() {
     });
   });
 }
-
-document.getElementById('restore').onclick = function() {
-  restoreState();
-}
-
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if (request.storeAssigns) {
-      console.log('storing assigns message received', request);
-    }
-  }
-);

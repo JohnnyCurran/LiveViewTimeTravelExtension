@@ -1,6 +1,6 @@
 // Listen to event from app.js
 window.addEventListener('SaveAssigns', function(e) {
-  console.log('My Event Detail!', e.detail);
+  // console.log('My Event Detail!', e.detail);
   if (!e.detail.time) { return; }
   // Retrieve time key for from storage with:
   // chrome.storage.local.get(socketId)[time]
@@ -10,7 +10,7 @@ window.addEventListener('SaveAssigns', function(e) {
     socketId: e.detail.socket_id,
     eventArgs: e.detail.event_args,
     component: e.detail.component,
-    componentId: e.detail.component_id
+    componentPid: e.detail.component_pid
   }});
 });
 

@@ -7,10 +7,10 @@ function do_something(msg) {
   // console.log('panel got msg', msg);
   for (time in msg) {
     if (!msg[time].newValue) {
-      console.log('Failed to get msg[time].newValue on msg', msg);
+      console.error('Failed to get msg[time].newValue on msg', msg);
       return;
     }
-    console.log('msg[time].newValue', msg[time].newValue);
+    // console.log('msg[time].newValue', msg[time].newValue);
     currentAssigns = msg[time].newValue.payload;
     eventName = msg[time].newValue.eventName;
     socketId = msg[time].newValue.socketId;
@@ -60,7 +60,7 @@ document.getElementById('clear').onclick = function() {
   updateAssignsDom({eventName: "", assigns: "{}"});
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {msg: 'ClearAssigns'}, function(response) {
-      console.log(response);
+      // console.log(response);
     });
   });
 }
@@ -68,11 +68,11 @@ document.getElementById('clear').onclick = function() {
 function restoreState() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     timeKey = getTimeKey(slider.value)
-    console.log('timekey from restore', timeKey);
+    // console.log('timekey from restore', timeKey);
     updateAssignsDom(timeKey);
     // jumperKey: socketId key in TimeTravel.Jumper that corresponds with the state
     // we want to retrieve
-    chrome.tabs.sendMessage(tabs[0].id, {msg: 'RestoreAssigns', time: timeKey.time, jumperKey: timeKey.socketId, component: timeKey.component, componentId: timeKey.componentId}, function(response) {
+    chrome.tabs.sendMessage(tabs[0].id, {msg: 'RestoreAssigns', time: timeKey.time, jumperKey: timeKey.socketId, component: timeKey.component, componentPid: timeKey.componentPid}, function(response) {
       console.log(response);
     });
   });

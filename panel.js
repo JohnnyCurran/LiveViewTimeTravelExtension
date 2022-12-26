@@ -10,11 +10,12 @@ function do_something(msg) {
       console.log('Failed to get msg[time].newValue on msg', msg);
       return;
     }
+    console.log('msg[time].newValue', msg[time].newValue);
     currentAssigns = msg[time].newValue.payload;
     eventName = msg[time].newValue.eventName;
     socketId = msg[time].newValue.socketId;
     eventArgs = msg[time].newValue.eventArgs;
-    timeKeys.push({time: time, assigns: currentAssigns, eventName: eventName, socketId: socketId, eventArgs: eventArgs});
+    timeKeys.push({time: time, assigns: currentAssigns, ...msg[time].newValue}); // eventName: eventName, socketId: socketId, eventArgs: eventArgs});
     updateAssignsDom(timeKeys[timeKeys.length - 1])
   }
   updateSlider(timeKeys.length - 1, timeKeys.length - 1)
@@ -71,7 +72,7 @@ function restoreState() {
     updateAssignsDom(timeKey);
     // jumperKey: socketId key in TimeTravel.Jumper that corresponds with the state
     // we want to retrieve
-    chrome.tabs.sendMessage(tabs[0].id, {msg: 'RestoreAssigns', time: timeKey.time, jumperKey: timeKey.socketId}, function(response) {
+    chrome.tabs.sendMessage(tabs[0].id, {msg: 'RestoreAssigns', time: timeKey.time, jumperKey: timeKey.socketId, component: timeKey.component, componentId: timeKey.componentId}, function(response) {
       console.log(response);
     });
   });
